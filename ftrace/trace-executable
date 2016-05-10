@@ -1,0 +1,18 @@
+#
+#  ./trace-executable  some-command arg-1 arg-2 ...
+#
+#   blog/fpmurphy.com/2014/05/kernel-tracing-using-ftrace.html
+#
+
+DEBUG_FS=/sys/kernel/debug/tracing
+
+# Clear trace buffer
+echo > $DEBUG_FS/trace
+
+echo function > $DEBUG_FS/current_tracer
+
+echo 1 > $DEBUG_FS/tracing_on
+$*
+echo 0 > $DEBUG_FS/tracing_on
+
+# cat $DEBUG_FS/trace
