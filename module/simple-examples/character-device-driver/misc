@@ -1,0 +1,3 @@
+find /sys -iname '*resrever'
+
+udevadm info -a -p /sys/class/tq84_class/resrever
