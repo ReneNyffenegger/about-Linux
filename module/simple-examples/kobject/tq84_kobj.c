@@ -21,7 +21,6 @@
 // in kernel space:
 //   filename_1, filename_2 and filename_3
 //
-//
 
 static int val_1, val_2, val_3;
 
@@ -124,7 +123,7 @@ static struct attribute_group attr_group = {
 
 static struct kobject *example_kobj;
 
-static int __init example_init(void) {
+static int __init kobj_init(void) {
     int retval;
 
  //
@@ -138,19 +137,19 @@ static int __init example_init(void) {
  //
     if (!example_kobj) return -ENOMEM;
 
-    /* Create the files associated with this kobject */
+ // Create the files associated with this kobject
     retval = sysfs_create_group(example_kobj, &attr_group);
-    if (retval)
-        kobject_put(example_kobj);
+
+    if (retval) kobject_put(example_kobj);
 
     return retval;
 }
 
-static void __exit example_exit(void) {
+static void __exit kobj_exit(void) {
     kobject_put(example_kobj);
 }
 
-module_init(example_init);
-module_exit(example_exit);
+module_init(kobj_init);
+module_exit(kobj_exit);
 
 MODULE_LICENSE("GPL v2");
